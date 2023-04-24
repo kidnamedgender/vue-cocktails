@@ -15,8 +15,9 @@
           Цена: <strong class="text-[24px]">{{ price as number }} руб.</strong>
         </p>
         <svg
+          @click="addHandler(title as string, price as number, pop as number, compound as Array<String>, image as string, parent_id as Number)"
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          :fill="isAdded?'#c491cc':'none'"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
@@ -31,13 +32,35 @@
   </div>
 </template>
 <script lang="ts">
-export default {
+import { defineComponent, PropType } from 'vue'
+import { CartCocktail } from '../views/MainView.vue';
+
+export default defineComponent({
+
+data: function (){
+  return {
+    isAdded: false
+  }
+},
+
   props: {
+    parent_id: Number,
     title: String,
     image: String,
     price: Number,
     pop: Number,
     compound: Array<String>,
+    cartCocktails: Array as PropType<CartCocktail[]>,
   },
-};
+
+  methods:{
+    addHandler:function(title:String, price:Number, pop:Number, compound:Array<String>, image:String,  parent_id: Number,){
+      const item = {parent_id, title, image, price, pop, compound};
+      if (!this.cartCocktails?.some((cocktail) => cocktail.parent_id === item.parent_id)) {
+          this.isAdded = true;
+        } 
+      this.$emit('add-to-cart', item)
+    }
+  },
+});
 </script>

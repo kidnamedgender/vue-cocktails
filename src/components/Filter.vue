@@ -15,7 +15,7 @@
       <p
         class="bg-red-600 text-white p-2 rounded-xl cursor-pointer"
         v-for="ing in removedIng"
-        @click="removeHandler(ing)">
+        @click="removeHandler(ing as string)">
         {{ ing }}
       </p>
     </div>
