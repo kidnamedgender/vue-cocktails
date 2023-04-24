@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-robotoSlab bg-bodyGradient  bg-cover;
+  }
+  svg {
+    @apply opacity-80 hover:opacity-100 cursor-pointer w-8;
+  }
+
+  li {
+    @apply pb-2 text-[#191316] opacity-80 hover:opacity-100 cursor-pointer;
+  }
+
+  .pag li {
+    @apply p-3 hover:bg-[rgba(0,0,0,0.1)];
+  }
+}
+
+@layer components {
+  .content {
+    @apply max-w-[1280px] mx-auto px-7 sm:px-10 bg-white pt-8 sm:pt-10 md:pt-20;
+  }
+
+  .card {
+    @apply hover:border-black cursor-pointer flex flex-col justify-between px-10 py-5 gap-10 shadow-lg rounded-[20px] max-w-[300px] border-mainGray border-[1px] transition-all hover:shadow-xl hover:rounded-[10px];
+  }
+
+  .title {
+    @apply text-center font-normal text-[28px] sm:text-[32px] md:text-[38px] md:text-left lg:text-[42px];
+  }
+
+  li.active {
+    @apply border-b-[1px] border-b-black opacity-100;
+  }
+
+  .pag li.active {
+    @apply bg-[rgba(0,0,0,0.2)];
+  }
+}
