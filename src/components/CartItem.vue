@@ -40,14 +40,15 @@
             d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </div>
-      <strong class="py-2 px-4 text-white font-bold rounded-[100px] bg-[#2f2832]">1</strong>
+      <strong class="block w-[50px] text-center py-2 px-4 text-white font-bold rounded-[100px] bg-[#2f2832]">{{  }}</strong>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-
+import { defineComponent, PropType } from 'vue';
+import { CartCocktail } from '../views/MainView.vue';
 export default defineComponent({
+
   props: {
     parent_id: Number,
     title: String,
@@ -55,6 +56,8 @@ export default defineComponent({
     price: Number,
     pop: Number,
     compound: Array<String>,
+    cocktails: Array as PropType<CartCocktail[]>,
+
   },
 });
 </script>

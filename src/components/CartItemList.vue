@@ -3,11 +3,13 @@
     <CartItem
       v-for="cocktail in cocktails"
       :key="cocktail.parent_id"
+      :parent_id="cocktail.parent_id"
       :title="cocktail.title"
       :image="cocktail.image"
       :price="cocktail.price"
       :pop="cocktail.pop"
-      :compound="cocktail.compound" />
+      :compound="cocktail.compound"
+      :cocktails="cocktails" />
   </div>
 </template>
 <script lang="ts">

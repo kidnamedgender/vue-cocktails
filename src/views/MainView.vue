@@ -28,10 +28,16 @@
           </ul>
         </div>
       </div>
-      <ItemList :cocktails="sortedItems" />
+      <ItemList
+        :cocktails="sortedItems"
+        @show-more="showMoreHandler"
+        :currentLimit="currentLimit" />
     </div>
 
-    <Pagination />
+    <Pagination
+      @change-page="changePageHandler"
+      :currentPage="currentPage"
+      :currentLimit="currentLimit" />
   </div>
 </template>
 
@@ -70,6 +76,10 @@ export default defineComponent({
       items: [],
       cartItems: [],
       searchValue: '',
+
+      currentPage: '1',
+      currentLimit: 6,
+
       sortTypes: ['А-Я', 'По цене', 'По популярности'],
       currentSortType: 'По популярности',
 
@@ -89,7 +99,10 @@ export default defineComponent({
   methods: {
     getItems: async function () {
       try {
-        const { data } = await axios.get('https://6445bebaee791e1e29f08dfb.mockapi.io/cocktails');
+        const url = new URL('https://6445bebaee791e1e29f08dfb.mockapi.io/cocktails');
+        url.searchParams.append('page', this.currentPage);
+        url.searchParams.append('limit', String(this.currentLimit));
+        const { data } = await axios.get(url.href);
         this.items = data;
       } catch (err) {
         console.log(err);
@@ -123,6 +136,18 @@ export default defineComponent({
     removeIngHandler: function (ing: string) {
       this.currentRemovedIng = this.currentRemovedIng.filter((item: String) => item !== ing);
       console.log(this.currentRemovedIng);
+    },
+
+    changePageHandler: function (page: string) {
+      this.currentPage = page;
+      window.scroll(0, 0);
+      this.getItems();
+    },
+
+    showMoreHandler: function () {
+      this.currentLimit = this.currentLimit + 6;
+      this.currentPage = '1';
+      this.getItems();
     },
   },
 

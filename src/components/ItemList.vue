@@ -11,10 +11,13 @@
         :price="cocktail.price"
         :pop="cocktail.pop"
         :compound="cocktail.compound"
+        :isAdded="cartItems?.some((cock) => cock.parent_id === cocktail.id)"
         :cartCocktails="cartItems" />
     </div>
     <div class="content flex justify-center">
       <button
+        @click="showMore"
+        v-if="(currentLimit as number) < 20"
         class="border-[1px] border-black px-20 py-3 rounded-xl md:px-40 uppercase hover:rounded-lg transition-all hover:bg-[rgba(0,0,0,0.1)]">
         Показать еще
       </button>
@@ -41,6 +44,8 @@ export default defineComponent({
   props: {
     cocktails: Array as PropType<Cocktail[]>,
     cartCocktails: Array as PropType<CartCocktail[]>,
+
+    currentLimit: Number,
   },
   components: {
     Item,
@@ -48,12 +53,8 @@ export default defineComponent({
   methods: {
     addToCartHandler: async function (item: CartCocktail) {
       try {
-        if (!this.cartItems?.some((cocktail) => cocktail.parent_id === item.parent_id)) {
-          await axios.post('https://6445bebaee791e1e29f08dfb.mockapi.io/cart', item);
-          this.cartItems = [...this.cartItems, item];
-        } else {
-          console.log('no');
-        }
+        await axios.post('https://6445bebaee791e1e29f08dfb.mockapi.io/cart', item);
+        this.cartItems = [...this.cartItems, item];
       } catch (err) {
         console.log(err);
       }
@@ -66,6 +67,9 @@ export default defineComponent({
       } catch (err) {
         console.log(err);
       }
+    },
+    showMore: function () {
+      this.$emit('show-more');
     },
   },
   created: function () {

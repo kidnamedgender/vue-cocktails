@@ -39,7 +39,6 @@ export default defineComponent({
 
 data: function (){
   return {
-    isAdded: false
   }
 },
 
@@ -51,14 +50,13 @@ data: function (){
     pop: Number,
     compound: Array<String>,
     cartCocktails: Array as PropType<CartCocktail[]>,
+
+    isAdded: Boolean,
   },
 
   methods:{
     addHandler:function(title:String, price:Number, pop:Number, compound:Array<String>, image:String,  parent_id: Number,){
       const item = {parent_id, title, image, price, pop, compound};
-      if (!this.cartCocktails?.some((cocktail) => cocktail.parent_id === item.parent_id)) {
-          this.isAdded = true;
-        } 
       this.$emit('add-to-cart', item)
     }
   },

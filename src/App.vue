@@ -1,6 +1,6 @@
 <template>
-  <div class="app">
-    <Header />
+  <div :class="darkTheme ? 'dark' : ''">
+    <Header @change-theme="themeHandler" :darkTheme="darkTheme" />
     <router-view></router-view>
   </div>
 </template>
@@ -9,12 +9,32 @@
 import { defineComponent } from 'vue';
 
 import Header from './components/Header.vue';
-import MainView from './views/MainView.vue';
 
 export default defineComponent({
+  data: function () {
+    return {
+      darkTheme: false,
+    };
+  },
   components: {
     Header,
-    MainView,
+  },
+  methods: {
+    themeHandler: function () {
+      this.darkTheme = !this.darkTheme;
+    },
+  },
+  watch: {
+    darkTheme: function (current) {
+      localStorage.darkTheme = current;
+    },
+  },
+  created: function () {
+    if (localStorage.darkTheme === 'false') {
+      this.darkTheme = false;
+    } else {
+      this.darkTheme = true;
+    }
   },
 });
 </script>

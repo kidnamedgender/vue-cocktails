@@ -1,7 +1,10 @@
 <template>
   <div class="content pb-20">
     <div class="flex flex-col md:justify-between md:flex-row md:items-center gap-2">
-      <h1 class="title">Корзина</h1>
+      <div>
+        <h1 class="title">Корзина</h1>
+        <p>Всего: {{ cartItems?.reduce((acc, _) => (acc += 1), 0) }}</p>
+      </div>
       <p @click="$router.back()" class="cursor-pointer">Назад</p>
     </div>
     <CartItemList :cocktails="cartItems" />
